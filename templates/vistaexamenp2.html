@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de CURP</title>
+    <style>
+        /* Estilos para centrar y diseñar el contenedor principal */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #ffc0cb; /* Fondo rosado */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .validacion {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analizador de CURP</h1>
+        <form action="/analizar" method="POST">
+            <label for="curp">Ingresa tu CURP:</label><br>
+            <input type="text" id="curp" name="curp" maxlength="18" value="{{ curp }}" required><br><br>
+            <input type="submit" value="Analizar">
+        </form>
+
+        <!-- Recuadro de validación -->
+        <div class="validacion">
+            {% if valida %}
+                {{ valida }}
+            {% endif %}
+        </div>
+
+        {% if tokens %}
+        <!-- Tabla de tokens -->
+        <table>
+            <tr>
+                <th>Token</th>
+                <th>Tipo</th>
+            </tr>
+            {% for descripcion, token in tokens %}
+            <tr>
+                <td>{{ token }}</td>
+                <td>{{ descripcion }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
